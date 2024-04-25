@@ -10,10 +10,8 @@ carCountryMap = {'Mazda':'Japan', 'Kia':'South Korea', 'Chevrolet':'USA', 'Ford'
                  'Dodge':'USA', 'Smart':'Germany', 'Genesis':'South Korea', 'Karma':'USA', 'Bugatti':'France',
                  'Chrysler':'USA', 'Eagle':'USA', 'Geo':'USA', 'Hummer':'USA', 'Isuzu':'Japan', 'Maybach':'Germany',
                  'International Scout':'USA', 'Oldsmobile':'USA', 'Plymouth':'USA', 'Pontiac':'USA', 'Saab':'Sweden',
-                 'Lamborghini':'Italy', 'Lotus':'UK', 'Scion':'Japan', 'Saturn':'USA', 'Suzuki':'Japan', 'Daewoo':'South Korea',
-                 'Lucid':'USA', 'Spyker':'Netherlands', 'Fisker':'USA', 'DeLorean':'USA', 'Panoz':'USA', 'Saleen':'USA',
-                 'Mercury':'USA', 'Polestar':'Sweden', 'Rivian':'USA', 'Hennessey':'USA', 'Koenigsegg':'Sweden',
-                 'Rolls-Royce':'UK'}
+                 'Lamborghini':'Italy', 'Lotus':'UK', 'Scion':'Japan', 'Saturn':'USA', 'Suzuki':'Japan',
+                 'Lucid':'USA','Mercury':'USA', 'Polestar':'Sweden', 'Rivian':'USA','Rolls-Royce':'UK'}
 
 def load_data(link):
     data = pd.read_csv(link)
