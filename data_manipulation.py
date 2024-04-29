@@ -14,11 +14,12 @@ carCountryMap = {'Mazda':'Japan', 'Kia':'South Korea', 'Chevrolet':'USA', 'Ford'
                  'Lucid':'USA','Mercury':'USA', 'Polestar':'Sweden', 'Rivian':'USA','Rolls-Royce':'UK'}
 
 def load_data(link):
-    data = pd.read_csv(link)
+    data = pd.read_csv(link, encoding='UTF-16', sep=',')
     return data
 
 def add_region_data(data):
-    return data
+    data['Country'] = data['Brand'].map(carCountryMap)
+    ##return data
 
 def add_msrp_data(data):
     return data
@@ -31,3 +32,7 @@ def get_vehicle_msrp(make, model, year):
 
 ## depreciation by mileage
 ## get msrp from KBB http://developer.kbb.com/#!/idws/99-Swagger
+
+data = load_data('car_sale_data.csv')
+add_region_data(data)
+data.to_csv('output.csv', index=False)
