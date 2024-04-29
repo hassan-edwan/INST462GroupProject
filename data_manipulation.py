@@ -24,8 +24,6 @@ def add_region_data(data):
 def add_msrp_data(data):
     return data
 
-def connect_to_api():
-    return
 
 def get_vehicle_msrp(make, model, year):
     return

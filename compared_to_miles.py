@@ -3,7 +3,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 # Load the dataset
-data = pd.read_csv('user/micah/csv/DataSet/cars_csv')  
+data = pd.read_csv('output.csv')  
 
 # Data Cleaning and Preprocessing (if needed)
 
