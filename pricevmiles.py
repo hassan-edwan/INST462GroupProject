@@ -1,21 +1,11 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 
 # Read the CSV file into a pandas DataFrame
 data = pd.read_csv('output.csv', encoding='UTF-8', sep=',')
 
-# Filter out cars with zero mileage
-# filtered_data = data[data['Mileage'] > 20000]
-# filtered_data = filtered_data[filtered_data['Status'] == 'Certified']
-# filtered_data = filtered_data[filtered_data['Country'] == 'Germany']
 
-# Create the scatter plot
-# plt.scatter(filtered_data['Mileage'], filtered_data['Price'])
-# plt.xlabel('Mileage')
-# plt.ylabel('Price')
-# plt.title('Price vs Mileage')
-# plt.show()
-# Create subplots
 fig, axes = plt.subplots(2, 2, figsize=(10, 8))
 
 filtered_data = data[data['Mileage'] < 80000]
@@ -34,6 +24,7 @@ for i, country in enumerate(countries):
     ax.set_xlabel('Mileage')
     ax.set_ylabel('Price')
     ax.set_title(f'Price vs Mileage for CPO Vehicles - {country}')
+    ax.plot(np.unique(country_filter['Mileage']), np.poly1d(np.polyfit(country_filter['Mileage'], country_filter['Price'], 1))(np.unique(country_filter['Mileage'])), color='red')
 
 # Adjust the spacing between subplots
 plt.tight_layout()

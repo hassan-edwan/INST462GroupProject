@@ -17,11 +17,3 @@ chart = alt.Chart(source).mark_bar().encode(
 save(chart, 'output.html')
 
 
-# alt.Chart(countries).mark_geoshape().encode(
-#     color='rate:Q'
-# ).transform_lookup(
-#     lookup='Country',
-#     from_=alt.LookupData(data=source, key='Country', fields=['rate'])
-# ).project(
-#     'naturalEarth1'
-# ).properties(width=600, height=400).configure_view(stroke=None)
