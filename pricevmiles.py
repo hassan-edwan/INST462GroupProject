@@ -1,42 +1,61 @@
 import pandas as pd
+import seaborn as sns
 import matplotlib.pyplot as plt
+import numpy as np
 
 # Read the CSV file into a pandas DataFrame
 data = pd.read_csv('output.csv', encoding='UTF-8', sep=',')
 
-# Filter out cars with zero mileage
-# filtered_data = data[data['Mileage'] > 20000]
-# filtered_data = filtered_data[filtered_data['Status'] == 'Certified']
-# filtered_data = filtered_data[filtered_data['Country'] == 'Germany']
+# Filter the data for specific countries and criteria
+countries_of_interest = ['Germany', 'Japan', 'South Korea', 'USA']
+filtered_data = data[(data['Mileage'] < 80000) & 
+                     (data['Mileage'] > 20000) & 
+                     (data['Price'] < 100000) & 
+                     (data['Status'] == 'Certified') &
+                     (data['Country'].isin(countries_of_interest))]
 
-# Create the scatter plot
-# plt.scatter(filtered_data['Mileage'], filtered_data['Price'])
-# plt.xlabel('Mileage')
-# plt.ylabel('Price')
-# plt.title('Price vs Mileage')
-# plt.show()
-# Create subplots
-fig, axes = plt.subplots(2, 2, figsize=(10, 8))
+# Set the style and context for seaborn
+sns.set(style='whitegrid')  # Set the overall style
+sns.set_context('talk')  # Adjust the context for the plot size
 
-filtered_data = data[data['Mileage'] < 80000]
-filtered_data = filtered_data[filtered_data['Mileage'] > 20000]
-filtered_data = filtered_data[filtered_data['Price'] < 100000]
-filtered_data = filtered_data[filtered_data['Status'] == 'Certified']
+# Define a color palette for the selected countries
+country_palette = sns.color_palette('Set1', n_colors=len(countries_of_interest))
 
-# Filter data for each country and plot the scatter plot
-countries = ['Germany', 'USA', 'Japan', 'South Korea']
-for i, country in enumerate(countries):
+# Create a scatter plot using Seaborn
+plt.figure(figsize=(10, 8))
 
-    country_filter = filtered_data[filtered_data['Country'] == country]
-    # Plot the scatter plot on the corresponding subplot
-    ax = axes[i // 2, i % 2]
-    ax.scatter(country_filter['Mileage'], country_filter['Price'])
-    ax.set_xlabel('Mileage')
-    ax.set_ylabel('Price')
-    ax.set_title(f'Price vs Mileage for CPO Vehicles - {country}')
+# Plot data points for selected countries
+for i, country in enumerate(countries_of_interest):
+    country_data = filtered_data[filtered_data['Country'] == country]
+    
+    # Plot scatter plot for each country with corresponding color
+    sns.scatterplot(x='Mileage', y='Price', data=country_data,
+                    color=country_palette[i], label=country, edgecolor='k', s=50)
+    
+    # Fit and plot regression line (trendline) for each country
+    trendline_color = tuple(np.array(country_palette[i]) + 0.1)  # Adjust color slightly
+    sns.regplot(x='Mileage', y='Price', data=country_data, scatter=False,
+                label=f'Trendline - {country}', ci=None, line_kws={'color': trendline_color})
 
-# Adjust the spacing between subplots
-plt.tight_layout()
+# Customize labels and title
+plt.xlabel('Mileage')
+plt.ylabel('Price')
+plt.title('Price vs Mileage for Certified Pre-Owned Vehicles')
+
+# Get the current Axes
+ax = plt.gca()
+
+# Get legend handles and labels
+handles, labels = ax.get_legend_handles_labels()
+
+# Create a mapping of label to handle for scatter plot points
+scatter_handles = [(handles[i], labels[i]) for i in range(len(handles)) if labels[i] not in [f'Trendline - {country}' for country in countries_of_interest]]
+
+# Clear the existing legend
+ax.legend().remove()
+
+# Create a new legend with only scatter plot handles and labels
+ax.legend(handles=[handle[0] for handle in scatter_handles], labels=[handle[1] for handle in scatter_handles], title='Country')
 
 # Show the plot
 plt.show()
