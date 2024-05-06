@@ -43,8 +43,6 @@ def manipulation_for_heatmap():
 
     percentage_deviation.to_csv('pricebycountry.csv', index=True)
 
-## depreciation by mileage
-## get msrp from KBB http://developer.kbb.com/#!/idws/99-Swagger
 
 data = load_data('car_sale_data.csv')
 add_region_data(data)
